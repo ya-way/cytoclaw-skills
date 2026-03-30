@@ -132,7 +132,6 @@ node skills/feishu-card/send.js --target "TARGET_ID" \
 2. `Analysis_Report.html`（内嵌图片，手机端可读）
 3. `Reproducible_Pipeline.ipynb`（完整 pipeline 代码）
 
-附言固定用："另外，本次质控、Harmony 整合及差异分析的完整代码和运行日志已打包，您可以随时下载复现："
 
 ---
 
