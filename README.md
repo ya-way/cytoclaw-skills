@@ -20,29 +20,6 @@ CytoClaw（细胞夹）是一个嵌入飞书工作流的单细胞生物信息学
 | **飞书集成** | 3 | 卡片消息/多维表格/在线表格 |
 | **基础设施** | 2 | FastQC 测序质控、RiboClaw UI 可视化 |
 
-## Demo 流程
-
-```
-用户（飞书）                          CytoClaw
-    │                                    │
-    ├─ 发送 h5ad 文件 ─────────────────→│
-    │                                    ├─ "收到，8000+ 细胞，跑着了"
-    │                                    ├─ 静默运行 QC + 降维 + 聚类
-    │                                    ├─ 定量检测批次效应
-    │                                    │
-    │←── ⚠️ Leiden UMAP + 形态预警卡片 ──┤
-    │←── 🔴 Sample_ID 批次图 + 实锤卡片 ─┤
-    │                                    │
-    ├─ "确实分两次上机的" ──────────────→│
-    │                                    ├─ 运行 Harmony 矫正
-    │←── ✅ 矫正后 UMAP + 绿色卡片 ─────┤
-    │                                    │
-    ├─ "配色有点丑" ───────────────────→│
-    │                                    ├─ 切换莫兰迪色系
-    │←── 🎨 Nature 级 Figure Set ────────┤
-    │←── 📄 Report.html + Pipeline.ipynb ┤
-```
-
 ## 快速部署
 
 ### 前置条件
@@ -150,23 +127,6 @@ cytoclaw-skills/
         ├── labclaw-viz-*/                 ← 5 个可视化工具
         ├── labclaw-lit-*/                 ← 8 个文献与数据库
         └── ...                            ← 更多专业模块
-```
-
-## 核心架构
-
-```
-飞书用户消息
-    ↓
-OpenClaw Gateway (port 18789)
-    ↓
-Feishu Plugin (事件订阅 → 消息解析)
-    ↓
-LLM Agent (Seed 2.0 Lite / DeepSeek-V3)
-    ├── 读取 IDENTITY.md + SOUL.md → 建立人格
-    ├── 读取 TOOLS.md → 知道 Python 环境路径
-    ├── 匹配 cytoclaw-scrna-workflow SKILL → 编排全流程
-    ├── 调用 sc_venv/bin/python 运行 scanpy 脚本
-    └── 通过 feishu-card skill 发送结果卡片
 ```
 
 ## 定制与调参
