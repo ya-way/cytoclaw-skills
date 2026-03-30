@@ -38,7 +38,7 @@ import matplotlib.pyplot as plt
 import scanpy as sc
 from sklearn.metrics import silhouette_score
 
-WS = '/home/shuotong/.openclaw/workspace'
+WS = os.path.expanduser('~/.openclaw/workspace')
 H5AD = '<用户文件路径>'
 
 adata = sc.read_h5ad(H5AD)

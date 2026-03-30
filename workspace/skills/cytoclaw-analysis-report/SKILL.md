@@ -23,7 +23,7 @@ def img_to_b64(path):
     with open(path, 'rb') as f:
         return base64.b64encode(f.read()).decode()
 
-WS = '/home/shuotong/.openclaw/workspace'
+WS = os.path.expanduser('~/.openclaw/workspace')
 
 # 收集所有生成的图
 figures = {}
