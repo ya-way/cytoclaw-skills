@@ -1,0 +1,28 @@
+# CytoClaw scRNA-seq Python 环境
+# 使用方式: python -m venv sc_venv && source sc_venv/bin/activate && pip install -r requirements.txt
+
+# 核心单细胞分析
+scanpy==1.12
+anndata==0.12.10
+leidenalg==0.11.0
+harmonypy==0.0.10
+scrublet==0.2.3
+umap-learn==0.5.11
+
+# 科学计算
+numpy==2.4.3
+scipy==1.17.1
+pandas==2.3.3
+scikit-learn==1.8.0
+
+# 可视化
+matplotlib==3.10.8
+seaborn==0.13.2
+
+# 依赖库
+h5py==3.16.0
+igraph==1.0.0
+pynndescent==0.6.0
+statsmodels==0.14.6
+numba==0.64.0
+tqdm==4.67.3
