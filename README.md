@@ -1,17 +1,24 @@
-# CytoClaw — 飞书单细胞分析 AI 助手
+# CytoClaw — 飞书单细胞生物学 AI 分析平台
 
-CytoClaw（细胞夹）是一个嵌入飞书工作流的 scRNA-seq AI 分析师，基于 [OpenClaw](https://github.com/nicepkg/openclaw) 网关构建。用户在飞书中发送 `.h5ad` 文件，CytoClaw 自动完成质控、降维聚类、批次效应检测与矫正、顶刊级可视化，并将结果以卡片消息推送回飞书。
+CytoClaw（细胞夹）是一个嵌入飞书工作流的单细胞生物信息学 AI 分析平台，基于 [OpenClaw](https://github.com/nicepkg/openclaw) 网关构建。覆盖 scRNA-seq、scATAC-seq、空间转录组、TCR/BCR 免疫组库、多组学整合、基因调控网络等细胞生物学核心分析场景，内置 **98 个专业 Skills**。
 
-## 能力概览
+用户在飞书中发送数据文件，CytoClaw 自动完成分析并以卡片消息推送结果、HTML 报告和可复现 Notebook。
 
-| Skill | 功能 |
-|---|---|
-| **cytoclaw-scrna-workflow** | 核心 scRNA-seq 全流程：QC → PCA → UMAP → Leiden → 批次效应检测 → Harmony 矫正 → 顶刊出图 |
-| **feishu-card** | 飞书富文本卡片消息（支持图片、Markdown、颜色标题、按钮） |
-| **feishu-bitable** | 飞书多维表格读写（记录分析任务） |
-| **feishu-sheets-skill** | 飞书在线表格操作（导出 QC 统计表） |
-| **openclaw-fastqc** | 上游 FASTQ 测序质控（FastQC + MultiQC） |
-| **riboclaw-visualization** | 前端 UI 可视化链路 JSON 输出 |
+## 能力矩阵
+
+| 模块 | Skills | 覆盖领域 |
+|---|---|---|
+| **核心分析流程** | 9 | scRNA-seq 全流程、HTML 报告生成、ipynb 交付、飞书交互人格 |
+| **单细胞分析** | 20 | 预处理/QC/聚类/注释/轨迹推断/doublet/批次整合/scATAC/多模态/Perturb-seq |
+| **空间转录组** | 11 | 数据加载/预处理/空间域识别/反卷积/细胞通讯/多组学/可视化 |
+| **TCR/BCR 免疫组库** | 5 | MiXCR/VDJtools/scirpy/ImmCantation/组库可视化 |
+| **基因调控网络** | 5 | SCENIC/共表达网络/差异网络/多组学 GRN/扰动模拟 |
+| **组学工作流** | 13 | scRNA/ATAC/spatial/multiome/RNA-seq DE/通路/GRN/ChIP/甲基化/剪接/CRISPR |
+| **通路与差异分析** | 11 | GO/GSEA/KEGG/Reactome/WikiPathways/DESeq2/edgeR/批次矫正 |
+| **数据可视化** | 11 | matplotlib/seaborn/plotly/热图/火山图/多面板/网络图/配色 |
+| **文献与数据库** | 13 | PubMed/bioRxiv/GEO/CellxGene Census/基因数据库/文献综述/科学写作 |
+| **飞书集成** | 3 | 卡片消息/多维表格/在线表格 |
+| **基础设施** | 2 | FastQC 测序质控、RiboClaw UI 可视化 |
 
 ## Demo 流程
 
@@ -115,19 +122,34 @@ openclaw start
 ```
 cytoclaw-skills/
 ├── README.md                              ← 本文件
+├── CUSTOMIZATION.md                       ← 人格/参数/配色定制指南
 ├── requirements.txt                       ← Python 依赖
 ├── openclaw.example.json                  ← 脱敏配置模板
 └── workspace/
     ├── IDENTITY.md                        ← CytoClaw 身份定义
     ├── SOUL.md                            ← 行为准则与分析协议
     ├── TOOLS.md                           ← 环境路径与配色规范
-    └── skills/
-        ├── cytoclaw-scrna-workflow/        ← scRNA-seq 全流程编排
+    └── skills/                            ← 98 个专业 Skills
+        ├── cytoclaw-scrna-workflow/        ← 核心 scRNA-seq 全流程编排
+        ├── cytoclaw-analysis-report/       ← HTML 报告生成模板
+        ├── cytoclaw-reproducible-notebook/ ← ipynb 可复现 Pipeline 交付
+        ├── cytoclaw-feishu-interaction/    ← 飞书交互人格与卡片美学
         ├── feishu-card/                   ← 飞书卡片消息（JS）
         ├── feishu-bitable/                ← 飞书多维表格
         ├── feishu-sheets-skill/           ← 飞书表格
         ├── openclaw-fastqc/               ← FastQC 质控
-        └── riboclaw-visualization/        ← UI 可视化输出
+        ├── riboclaw-visualization/        ← UI 可视化输出
+        ├── bio-single-cell-*/             ← 14 个单细胞分析模块
+        ├── bio-spatial-transcriptomics-*/ ← 11 个空间转录组模块
+        ├── bio-tcr-bcr-analysis-*/        ← 5 个免疫组库模块
+        ├── bio-gene-regulatory-networks-*/← 5 个基因调控网络模块
+        ├── bio-wf-*/                      ← 13 个组学工作流
+        ├── bio-pathway-analysis-*/        ← 6 个通路分析模块
+        ├── bio-differential-expression-*/ ← 5 个差异表达模块
+        ├── bio-data-visualization-*/      ← 6 个生物数据可视化模块
+        ├── labclaw-viz-*/                 ← 5 个可视化工具
+        ├── labclaw-lit-*/                 ← 8 个文献与数据库
+        └── ...                            ← 更多专业模块
 ```
 
 ## 核心架构
@@ -147,9 +169,21 @@ LLM Agent (Seed 2.0 Lite / DeepSeek-V3)
     └── 通过 feishu-card skill 发送结果卡片
 ```
 
+## 定制与调参
+
+参见 [CUSTOMIZATION.md](CUSTOMIZATION.md)，涵盖：
+
+- 人格风格调整（博后口吻 ↔ PI 正式 ↔ 命令行简洁）
+- QC 阈值、批次效应检测灵敏度、聚类分辨率
+- 配色方案切换（莫兰迪 / Nature 经典 / Viridis）
+- 飞书卡片颜色语义、消息节奏
+- 交付物开关（HTML 报告、ipynb notebook）
+- 模型选择
+
 ## 注意事项
 
 - **Python 环境路径**：TOOLS.md 和 SKILL.md 中硬编码了 `~/.openclaw/workspace/sc_venv`，请确保 venv 安装在此路径
 - **图片发送**：feishu-card 需要飞书应用具有 `im:resource` 权限才能上传图片
 - **模型选择**：默认使用 Seed 2.0 Lite（便宜且支持 vision），可替换为其他 OpenAI 兼容模型
 - **批次效应检测阈值**：silhouette > 0.1 或 UMAP 中心距 > 2.0 触发预警（见 SOUL.md）
+- **Skill 架构**：98 个 skills 分层协作——核心流程 skill 编排分析逻辑，领域 skill 提供专业知识，飞书 skill 处理消息投递
